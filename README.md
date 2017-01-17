@@ -13,17 +13,8 @@ The project will fire up a server hosted on port 3000.
 
 ## Adding a comment
 
-Create a 'POST' request to http://localhost:3000/[COMPONENTID] with the following JSON as you body:
+Create a 'POST' request to http://localhost:3000/[COMPONENTID] with the following JSON as you body e.g. :
 
-```JSON
-{
-    userName: STRING,
-    userEmail: STRING,
-    comment: STRING
-}
-```
-
-e.g.
 ```
 {
 	"userName": "George",
