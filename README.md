@@ -9,7 +9,15 @@ A simple API to store and retrieve comments from a Firebase database.
 - Enter your API details from Firebase into the config.json file
 - Type 'npm start'
 
-The project will fire up a server hosted on port 3000.
+The project will fire up a server hosted on port 3000 (default - can be changed in the config).
+
+## Development
+
+To run the project in development mode:
+
+- Type 'npm run dev'
+
+This will fire up 'nodemon' to watch for changes and use 'babel-node' for on the fly transpilation.
 
 ## Adding a comment
 
@@ -19,7 +27,8 @@ Create a 'POST' request to http://localhost:3000/[COMPONENTID] with the followin
 {
 	"userName": "George",
 	"userEmail": "george.smith@wipro.com",
-	"comment": "Looks good - approved!"
+	"comment": "Looks good - approved!",
+	"version": "0.0.1"
 }
 ```
 
@@ -46,14 +55,16 @@ Here's a sample of the data that would be returned
         "componentId": "/dropdown",
         "timestamp": 1484649683645,
         "userEmail": "tim.sail@wipro.com",
-        "userName": "Tim"
+        "userName": "Tim",
+        "version": "0.0.1"
       },
       "-Kag0Kt2cjeA-7YyHrrR": {
         "comment": "Looks good - approved!",
         "componentId": "/dropdown",
         "timestamp": 1484649752200,
         "userEmail": "george.smith@wipro.com",
-        "userName": "George"
+        "userName": "George",
+        "version": "0.0.1"
       }
     }
   }
@@ -62,5 +73,6 @@ Here's a sample of the data that would be returned
 
 ## TODO
 
+- Sorting comments by timestamp
 - Delete a comment
 - Authentication

@@ -3,5 +3,6 @@
   "authDomain": "<FIREBASEKEY>.firebaseapp.com",
   "databaseURL": "https://<FIREBASEKEY>.firebaseio.com",
   "storageBucket": "<FIREBASEKEY>.appspot.com",
-  "messagingSenderId": ""
+  "messagingSenderId": "",
+  "PORT": 3001
 };

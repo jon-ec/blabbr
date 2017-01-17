@@ -1,3 +1,5 @@
+require("babel-polyfill");
+
 // Set up Firebase
 import * as firebase from "firebase";
 var config = require('../config.json');
@@ -99,10 +101,14 @@ async function methodHandler(request, response) {
 /**
  * our micro service, run methodHandler and send result as a response (or an error)
  */
-module.exports = async function (request, response) {
+const server = micro(async function (request, response) {
     try {
         send(response, 200, await methodHandler(request));
     } catch (error) {
         sendError(request, response, error);
     }
-};
+});
+const PORT = process.env.port || config.PORT || 3000;
+server.listen(PORT);
+
+console.log(`API listening on port: ${PORT}`);
