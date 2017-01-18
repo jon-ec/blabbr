@@ -4,9 +4,31 @@ A simple API to store and retrieve comments from a Firebase database.
  
 ## Getting started
 
+### Pre-requisites
+- Node v7+
+- You'll also need to create a project in Firebase and get the API
+  key. [Sign up for a free account](https://www.firebase.com/login/). 
+  Then go into project settings and find
+  the API key and paste it into the config.json.
+  To ensure that you don't accidentally commit your config.json to Github,
+  run:
+  
+  ```
+  git update-index --assume-unchanged config.json
+  ```
+
+### To run
 - Clone this repo and 'npm install' dependencies.
-- Rename the config.default.json to config.json
 - Enter your API details from Firebase into the config.json file
+- Change the 'Rules' in your Firebase 'Database' -> 'Rules' to allow read and write access without authentication e.g.
+ ```
+ {
+   "rules": {
+     ".read": "true",
+     ".write": "true"
+   }
+ }
+```
 - Type 'npm start'
 
 The project will fire up a server hosted on port 3000 (default - can be changed in the config).
