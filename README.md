@@ -10,16 +10,16 @@ A simple API to store and retrieve comments from a Firebase database.
   key. [Sign up for a free account](https://www.firebase.com/login/). 
   Then go into project settings and find
   the API key and paste it into the config.json.
-  To ensure that you don't accidentally commit your config.json to Github,
+
+### To run
+- Clone this repo and 'npm install' dependencies.
+- Enter your API details from Firebase into the config.json file
+To ensure that you don't accidentally commit your config.json to Github,
   run:
   
   ```
   git update-index --assume-unchanged config.json
   ```
-
-### To run
-- Clone this repo and 'npm install' dependencies.
-- Enter your API details from Firebase into the config.json file
 - Change the 'Rules' in your Firebase 'Database' -> 'Rules' to allow read and write access without authentication e.g.
  ```
  {
