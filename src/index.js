@@ -62,6 +62,8 @@ async function methodHandler(request, response) {
  */
 const server = micro(async function (request, response) {
     try {
+        response.setHeader('Access-Control-Allow-Origin', '*');
+        response.setHeader('Content-Type', 'application/json');
         send(response, 200, await methodHandler(request));
     } catch (error) {
         sendError(request, response, error);
