@@ -3,6 +3,7 @@ var config = require('../config.json');
 import url from 'url';
 import writeComment from './writeComments';
 import readComments from './readComments';
+import deleteComment from './deleteComment';
 import micro, {
     json,
     send,
@@ -33,6 +34,10 @@ async function postHandler(request) {
 
 /**
  * handle GET requests
+ * Possibilities include:
+ * http://[HOST]:[PORT]/[COMPONENTID] OR
+ * * http://[HOST]:[PORT]/[COMPONENTID]/[STATEID] OR
+ * * http://[HOST]:[PORT]/[COMPONENTID]/[STATEID]/[VERSION]
  */
 async function getHandler(request) {
     const { pathname } = url.parse(request.url);
@@ -40,6 +45,17 @@ async function getHandler(request) {
     var urlParams = pattern.match(pathname);
 
     return await readComments(urlParams);
+}
+/**
+ * handle DELETE requests
+ * http://[HOST]:[PORT]/[COMPONENTID]/[COMMENTID]
+ */
+async function deleteHandler(request) {
+    const { pathname } = url.parse(request.url);
+    var pattern = new urlPattern('(/:componentId)(/:commentId)');
+    var urlParams = pattern.match(pathname);
+
+    return await deleteComment(urlParams);
 }
 
 /**
@@ -52,8 +68,10 @@ async function methodHandler(request, response) {
                 return await postHandler(request);
             case 'GET':
                 return await getHandler(request);
+            case 'DELETE':
+                return await deleteHandler(request);
             default:
-                send(response, 405, 'Invalid method');
+                send(response, 405, { success: 0, error: "Invalid HTTP method" });
                 break;
         }
     } catch (error) {
@@ -70,7 +88,7 @@ const server = micro(async function (request, response) {
         response.setHeader('Access-Control-Allow-Origin', '*');
         response.setHeader('Content-Type', 'application/json');
 
-        send(response, 200, await methodHandler(request));
+        send(response, 200, await methodHandler(request, response));
     } catch (error) {
         sendError(request, response, error);
     }

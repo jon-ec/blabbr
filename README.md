@@ -107,6 +107,14 @@ Here's a sample of the data that would be returned
     }
   ]
 }
+
+```
+## Delete a comment
+
+Create a 'DELETE' request with the component id and comment id e.g.
+ 
+```
+    http://localhost:3000/[COMPONENTID]/[COMMENTID]
 ```
 
 ### Notes:
@@ -115,5 +123,4 @@ Here's a sample of the data that would be returned
 
 ## TODO
 
-- Delete a comment
 - Authentication
