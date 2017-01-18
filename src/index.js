@@ -1,5 +1,3 @@
-require("babel-polyfill");
-
 var config = require('../config.json');
 
 import url from 'url';
@@ -10,6 +8,8 @@ import micro, {
     send,
     sendError,
 } from 'micro';
+import { slug } from './utils';
+import urlPattern from 'url-pattern';
 
 /**
  * handle POST requests
@@ -21,9 +21,10 @@ async function postHandler(request) {
     var commentData = {
         userName: postParams.userName,
         userEmail: postParams.userEmail,
-        componentId: pathname,
+        componentId: slug(pathname),
         comment: postParams.comment,
         timestamp: new Date().getTime(),
+        stateId: postParams.stateId,
         version: postParams.version
     };
 
@@ -35,7 +36,10 @@ async function postHandler(request) {
  */
 async function getHandler(request) {
     const { pathname } = url.parse(request.url);
-    return await readComments(pathname);
+    var pattern = new urlPattern('(/:componentId)(/:stateId)(/:version)');
+    var urlParams = pattern.match(pathname);
+
+    return await readComments(urlParams);
 }
 
 /**

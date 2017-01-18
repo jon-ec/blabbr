@@ -8,13 +8,10 @@ A simple API to store and retrieve comments from a Firebase database.
 - Node v7+
 - You'll also need to create a project in Firebase and get the API
   key. [Sign up for a free account](https://www.firebase.com/login/). 
-  Then go into project settings and find
-  the API key and paste it into the config.json.
 
 ### To run
 - Clone this repo and 'npm install' dependencies.
-- Enter your API details from Firebase into the config.json file
-To ensure that you don't accidentally commit your config.json to Github,
+- Enter your API details from Firebase DB settings into the config.json file. To ensure that you don't accidentally commit your config.json to Github,
   run:
   
   ```
@@ -47,54 +44,76 @@ Create a 'POST' request to http://localhost:3000/[COMPONENTID] with the followin
 
 ```
 {
-	"userName": "George",
-	"userEmail": "george.smith@wipro.com",
+	"userName": "Jack",
+	"userEmail": "jack.smith@wipro.com",
 	"comment": "Looks good - approved!",
-	"version": "0.0.1"
+	"stateId": "default",
+	"version": "0_0_1"
 }
 ```
 
 If the POST was successfull you'll recieve the following JSON back:
 ```
 {
-  "success": 1  
+  "success": 1,
+  "comment": {
+    "userName": "Jack",
+    "userEmail": "jack.smith@wipro.com",
+    "componentId": "dropdown",
+    "comment": "Looks good - approved!",
+    "timestamp": 1484749828849,
+    "stateId": "default",
+    "version": "0_0_1"
+  }
 }
 ```
 
 ## Retrieving a comment
 
-Create a 'GET' request to http://localhost:3000/[COMPONENTID]
+Create a 'GET' request to:
+```
+ http://localhost:3000/[COMPONENTID] 
+ OR
+ http://localhost:3000/[COMPONENTID]/[STATEID]
+ OR
+ http://localhost:3000/[COMPONENTID]/[STATEID]/[VERSION]
+```
 
 Here's a sample of the data that would be returned
 
 ```
 {
   "success": 1,
-  "comments": {
-    "undefined": {
-      "-Kag04f2kgW1a0NLErbJ": {
-        "comment": "Please add a 2px black border",
-        "componentId": "/dropdown",
-        "timestamp": 1484649683645,
-        "userEmail": "tim.sail@wipro.com",
-        "userName": "Tim",
-        "version": "0.0.1"
-      },
-      "-Kag0Kt2cjeA-7YyHrrR": {
-        "comment": "Looks good - approved!",
-        "componentId": "/dropdown",
-        "timestamp": 1484649752200,
-        "userEmail": "george.smith@wipro.com",
-        "userName": "George",
-        "version": "0.0.1"
-      }
+  "comments": [
+    {
+      "id": ""-KalyE-fFQifQwUpTrRl",
+      "comment": "New update added",
+      "componentId": "dropdown",
+      "timestamp": 1484749598756,
+      "userEmail": "jack.smith@wipro.com",
+      "userName": "Jack",
+      "stateId": "default",
+      "version": "0_0_1"
+    },
+    {
+      "id": "-Kalz6AsIqNyH6zc-20X",
+      "comment": "New update added",
+      "componentId": "dropdown",
+      "timestamp": 1484749828849,
+      "userEmail": "jack.smith@wipro.com",
+      "userName": "Jack",
+      "stateId": "default",
+      "version": "0_0_1"
     }
-  }
+  ]
 }
 ```
 
+### Notes:
+
+- comments are sorted by timestamp in descending order (last comment added will be first returned)
+
 ## TODO
 
-- Sorting comments by timestamp
 - Delete a comment
 - Authentication
