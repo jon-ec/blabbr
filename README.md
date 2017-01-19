@@ -137,7 +137,5 @@ and send through the following JSON in the body:
 - comments are sorted by timestamp in descending order (last comment added will be first returned)
 
 ## TODO
-
-- Edit a comment
 - Add docs for 'listening' to db events from the front-end
 - Authentication
