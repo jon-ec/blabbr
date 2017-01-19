@@ -117,6 +117,21 @@ Create a 'DELETE' request with the component id and comment id e.g.
     http://localhost:3000/[COMPONENTID]/[COMMENTID]
 ```
 
+## Edit a comment
+
+Create a 'PUT' request with the component id and comment id e.g.
+ 
+```
+    http://localhost:3000/[COMPONENTID]/[COMMENTID]
+```
+
+and send through the following JSON in the body:
+```
+    {
+        "comment": "Newly updated comment"
+    }
+```
+
 ### Notes:
 
 - comments are sorted by timestamp in descending order (last comment added will be first returned)
