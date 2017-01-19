@@ -20,8 +20,8 @@ export default function readComments (urlParams) {
 
         if (allComments === null) {
             return {
-                "success": 0,
-                "error":  "No comments found for this component."
+                "success": 1,
+                "comments": parsedComments
             };
         }
         try {
@@ -47,7 +47,7 @@ export default function readComments (urlParams) {
     });
 }
 
-// helper function
+// #### helper functions #####
 /**
  *
  * @param comments - array
@@ -80,7 +80,7 @@ function parseComments(allComments) {
     return parsedComments.slice(0);
 }
 
-// using a generator function
+// using a generator function to
 function* entries(obj) {
     for (let key of Object.keys(obj)) {
         yield [key, obj[key]];

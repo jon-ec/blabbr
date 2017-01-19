@@ -1,9 +1,12 @@
+import "babel-polyfill";
+
 var config = require('../config.json');
 
 import url from 'url';
 import writeComment from './writeComments';
 import readComments from './readComments';
 import deleteComment from './deleteComment';
+import editComment from './editComment';
 import micro, {
     json,
     send,
@@ -57,7 +60,21 @@ async function deleteHandler(request) {
 
     return await deleteComment(urlParams);
 }
+/**
+ * handle PUT requests
+ * http://[HOST]:[PORT]/[COMPONENTID]/[COMMENTID]
+ * Body param e.g. { comment: "update to comment" }
+ *
+ */
+async function putHandler(request) {
+    var { pathname } = url.parse(request.url),
+        pattern = new urlPattern('(/:componentId)(/:commentId)'),
+        urlParams = pattern.match(pathname),
+        postParams = await json(request),
+        comment = postParams.comment;
 
+    return await editComment(urlParams, comment);
+}
 /**
  * Check the request method and use postHandler or getHandler (or other method handlers)
  */
@@ -70,6 +87,8 @@ async function methodHandler(request, response) {
                 return await getHandler(request);
             case 'DELETE':
                 return await deleteHandler(request);
+            case 'PUT':
+                return await putHandler(request);
             default:
                 send(response, 405, { success: 0, error: "Invalid HTTP method" });
                 break;

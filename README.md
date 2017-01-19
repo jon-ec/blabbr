@@ -123,4 +123,6 @@ Create a 'DELETE' request with the component id and comment id e.g.
 
 ## TODO
 
+- Edit a comment
+- Add docs for 'listening' to db events from the front-end
 - Authentication
