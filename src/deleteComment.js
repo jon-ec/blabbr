@@ -10,14 +10,14 @@ export default function deleteComment(urlParams) {
 
         return {
             "success": 1,
-            "comment": "Comment removed"
+            "msg": "Your comment was removed successfully."
         };
 
     } catch (error) {
         console.error(error);
         return {
             "success": 0,
-            "error":  "There was a problem deleting the data to the database."
+            "msg":  "There was a problem deleting your comment."
         };
     }
 }

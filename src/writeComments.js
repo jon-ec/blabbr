@@ -14,13 +14,14 @@ export default function writeComment(commentData) {
 
         return {
             "success": 1,
+            "msg": "Your comment was added successfully.",
             "comment": commentData
         };
     } catch (error) {
         console.error(error);
         return {
             "success": 0,
-            "error":  "There was a problem writing the data to the database."
+            "msg":  "There was a problem posting your comment."
         };
     }
 }
