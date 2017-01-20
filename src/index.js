@@ -75,6 +75,7 @@ async function putHandler(request) {
 
     return await editComment(urlParams, comment);
 }
+
 /**
  * Check the request method and use postHandler or getHandler (or other method handlers)
  */
@@ -90,6 +91,7 @@ async function methodHandler(request, response) {
             case 'PUT':
                 return await putHandler(request);
             default:
+                console.log("METHOD not allowed: ", request.method);
                 send(response, 405, { success: 0, error: "Invalid HTTP method" });
                 break;
         }
@@ -106,7 +108,12 @@ const server = micro(async function (request, response) {
         // Add CORS
         response.setHeader('Access-Control-Allow-Origin', '*');
         response.setHeader('Content-Type', 'application/json');
-        response.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+        response.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, OPTIONS');
+        response.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization');
+
+        if (request.method === 'OPTIONS') {
+          return send(response, 200);
+        }
         send(response, 200, await methodHandler(request, response));
     } catch (error) {
         sendError(request, response, error);
