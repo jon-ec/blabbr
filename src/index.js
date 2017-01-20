@@ -106,7 +106,7 @@ const server = micro(async function (request, response) {
         // Add CORS
         response.setHeader('Access-Control-Allow-Origin', '*');
         response.setHeader('Content-Type', 'application/json');
-
+        response.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
         send(response, 200, await methodHandler(request, response));
     } catch (error) {
         sendError(request, response, error);

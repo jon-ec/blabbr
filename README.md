@@ -132,10 +132,49 @@ and send through the following JSON in the body:
     }
 ```
 
+# Client side
+## Setup
+Install the firebase package, saving it as a project dependency:
+```
+npm install -S firebase
+```
+Create a new file (e.g. db.js) with the following code:
+```
+import * as firebase from "firebase";
+
+var config = {
+  apiKey: "<API_KEY>",
+  authDomain: "<PROJECT_ID>.firebaseapp.com",
+  databaseURL: "https://<DATABASE_NAME>.firebaseio.com",
+  storageBucket: "<BUCKET>.appspot.com",
+};
+firebase.initializeApp(config);
+
+var db = firebase.database();
+export default db;
+```
+
+## Listening to database events 
+Example
+```
+import db from './db';
+var commentsRef = db.ref('post-comments/' + postId);
+commentsRef.on('child_added', function(data) {
+  addCommentElement(postElement, data.key, data.val().text, data.val().author);
+});
+
+commentsRef.on('child_changed', function(data) {
+  setCommentValues(postElement, data.key, data.val().text, data.val().author);
+});
+
+commentsRef.on('child_removed', function(data) {
+  deleteComment(postElement, data.key);
+});
+```
+
 ### Notes:
 
 - comments are sorted by timestamp in descending order (last comment added will be first returned)
 
 ## TODO
-- Add docs for 'listening' to db events from the front-end
 - Authentication
