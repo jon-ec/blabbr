@@ -21,15 +21,22 @@ import urlPattern from 'url-pattern';
 async function postHandler(request) {
     const postParams = await json(request);
     const { pathname } = url.parse(request.url);
+    const timestamp = new Date().getTime();
 
     var commentData = {
         userName: postParams.userName,
         userEmail: postParams.userEmail,
         componentId: slug(pathname),
         comment: postParams.comment,
-        timestamp: new Date().getTime(),
+        timestamp: timestamp,
         stateId: postParams.stateId,
-        version: postParams.version
+        version: postParams.version,
+        edited: false,
+        lastUpdated: timestamp,
+        approverName: postParams.approverName || '',
+        approverEmail: postParams.approverEmail || '',
+        approvedDate: postParams.approvedDate || '',
+        approved: postParams.approved || false
     };
 
     return await writeComment(commentData);
@@ -70,10 +77,9 @@ async function putHandler(request) {
     var { pathname } = url.parse(request.url),
         pattern = new urlPattern('(/:componentId)(/:commentId)'),
         urlParams = pattern.match(pathname),
-        postParams = await json(request),
-        comment = postParams.comment;
+        postParams = await json(request);
 
-    return await editComment(urlParams, comment);
+    return await editComment(urlParams, postParams);
 }
 
 /**
