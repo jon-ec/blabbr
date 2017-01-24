@@ -32,11 +32,7 @@ async function postHandler(request) {
         stateId: postParams.stateId,
         version: postParams.version,
         edited: false,
-        lastUpdated: timestamp,
-        approverName: postParams.approverName || '',
-        approverEmail: postParams.approverEmail || '',
-        approvedDate: postParams.approvedDate || '',
-        approved: postParams.approved || false
+        lastUpdated: timestamp
     };
 
     return await writeComment(commentData);
